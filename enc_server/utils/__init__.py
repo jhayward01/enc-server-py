@@ -1,2 +1,4 @@
 from .config import *
-__all__ = ["load_configs", "verify_configs"]
+from .conn import *
+
+__all__ = ["load_configs", "verify_configs", "ConnInterface", "ConnSocket"]
