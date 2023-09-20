@@ -1,11 +1,10 @@
-from .context import enc_server
-
+import enc_server
 import unittest
 
 
 class ConfigTestSuite(unittest.TestCase):
 
-    config_path = "config/config.yaml"
+    config_path = "../config/config.yaml"
     bad_config_path = ""
 
     config_map = {

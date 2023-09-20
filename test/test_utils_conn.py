@@ -1,5 +1,4 @@
-from .context import enc_server
-
+import enc_server
 import unittest
 
 
