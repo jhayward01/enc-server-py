@@ -3,7 +3,6 @@ import unittest
 
 
 class ConfigTestSuite(unittest.TestCase):
-
     config_path = "../config/config.yaml"
     bad_config_path = ""
 
@@ -29,16 +28,16 @@ class ConfigTestSuite(unittest.TestCase):
                           ConfigTestSuite.bad_config_path)
 
     def test_verify_configs(self):
-        result = enc_server.utils.verify_configs(ConfigTestSuite.config_map,
-                                                 ConfigTestSuite.config_fields)
-        self.assertTrue(result[0])
-        self.assertEqual(result[1], "")
+        result, missing = enc_server.utils.verify_configs(ConfigTestSuite.config_map,
+                                                          ConfigTestSuite.config_fields)
+        self.assertTrue(result)
+        self.assertEqual(missing, "")
 
     def test_verify_configs_err(self):
-        result = enc_server.utils.verify_configs(ConfigTestSuite.config_map,
-                                                 ConfigTestSuite.bad_config_fields)
-        self.assertFalse(result[0])
-        self.assertEqual(result[1], "foo")
+        result, missing = enc_server.utils.verify_configs(ConfigTestSuite.config_map,
+                                                          ConfigTestSuite.bad_config_fields)
+        self.assertFalse(result)
+        self.assertEqual(missing, "foo")
 
 
 if __name__ == '__main__':

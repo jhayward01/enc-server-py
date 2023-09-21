@@ -2,7 +2,7 @@ import os
 import yaml
 
 
-def verify_configs(configs: dict, expected: list) -> (bool, str):
+def verify_configs(configs: dict, expected: list) -> tuple[bool, str]:
     for field in expected:
         if field not in configs.keys():
             return False, field
