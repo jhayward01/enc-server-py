@@ -1,6 +1,8 @@
 import abc
 import socket
 
+import config
+
 
 class ConnInterface(abc.ABC):
     @abc.abstractmethod
@@ -9,10 +11,14 @@ class ConnInterface(abc.ABC):
 
 
 class ConnSocket(ConnInterface):
-
     buffer_size = 1024
 
-    def __init__(self, server_addr):
+    def __init__(self, configs):
+        result, missing = config.verify_configs(configs, ["serverAddr"])
+        if not result:
+            raise KeyError("ConnSocket missing configuration" + missing)
+
+        server_addr = configs["serverAddr"]
         self.server_host = server_addr.split(":")[0]
         self.server_port = int(server_addr.split(":")[1])
 

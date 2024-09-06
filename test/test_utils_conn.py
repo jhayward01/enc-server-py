@@ -30,25 +30,25 @@ class ConnTestSuite(unittest.TestCase):
     server_response = "Hello"
 
     def test_init(self):
-        conn = enc_server.utils.ConnSocket(ConnTestSuite.server_addr)
+        conn = enc_server.utils.ConnSocket({"serverAddr": ConnTestSuite.server_addr})
         self.assertIsNotNone(conn)
 
     def test_init_err(self):
         self.assertRaises(IndexError, enc_server.utils.ConnSocket,
-                          ConnTestSuite.bad_server_addr)
+                          {"serverAddr": ConnTestSuite.bad_server_addr})
 
     def test_get_response(self):
         server = threading.Thread(target=socket_server)
         server.start()
 
-        conn = enc_server.utils.ConnSocket(ConnTestSuite.server_addr)
+        conn = enc_server.utils.ConnSocket({"serverAddr": ConnTestSuite.server_addr})
         response = conn.get_response(ConnTestSuite.server_msg)
         self.assertEqual(response, ConnTestSuite.server_response)
 
         server.join()
 
     def test_get_response_err(self):
-        conn = enc_server.utils.ConnSocket(ConnTestSuite.server_addr)
+        conn = enc_server.utils.ConnSocket({"serverAddr": ConnTestSuite.server_addr})
         self.assertRaises(ConnectionRefusedError, conn.get_response,
                           ConnTestSuite.server_msg)
 
