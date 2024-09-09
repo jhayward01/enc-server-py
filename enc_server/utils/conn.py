@@ -8,7 +8,7 @@ class ConnSocket:
     def __init__(self, configs):
         result, missing = config.verify_configs(configs, ["serverAddr"])
         if not result:
-            raise KeyError("ConnSocket missing configuration" + missing)
+            raise KeyError("ConnSocket missing configuration " + missing)
 
         server_addr = configs["serverAddr"]
         self.server_host = server_addr.split(":")[0]
