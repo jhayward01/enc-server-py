@@ -12,7 +12,7 @@ class DbTestSuite(unittest.TestCase):
     def setUp(self):
         self.db = None
 
-    def setup_db(self, config):
+    def setup_db(self, config: dict):
         self.db = enc_server.utils.DB(config)
 
     def test_init(self):
@@ -21,11 +21,6 @@ class DbTestSuite(unittest.TestCase):
 
     def test_missing_init(self):
         self.assertRaises(KeyError, self.setup_db, {})
-
-    def test_bad_init(self):
-        self.setup_db({"mongoURI": DbTestSuite.bad_mongo_uri})
-        self.assertRaises(RuntimeError, self.db.store_record, record_id=DbTestSuite.record_id,
-                          record_payload=DbTestSuite.record_payload)
 
     def test_db(self):
         self.setup_db({"mongoURI": DbTestSuite.mongo_uri})

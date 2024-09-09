@@ -5,7 +5,7 @@ import config
 class ConnSocket:
     buffer_size = 1024
 
-    def __init__(self, configs):
+    def __init__(self, configs: dict):
         result, missing = config.verify_configs(configs, ["serverAddr"])
         if not result:
             raise KeyError("ConnSocket missing configuration " + missing)
