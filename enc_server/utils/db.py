@@ -1,23 +1,8 @@
-import abc
 import config
 import pymongo
 
 
-class DBInterface(abc.ABC):
-    @abc.abstractmethod
-    def store_record(self, record_id: str, record_payload: str):
-        pass
-
-    @abc.abstractmethod
-    def retrieve_record(self, record_id: str) -> str:
-        pass
-
-    @abc.abstractmethod
-    def delete_record(self, record_id: str):
-        pass
-
-
-class DB(DBInterface):
+class DB:
     db_name = "enc-server-go"
     db_collection = "records"
 

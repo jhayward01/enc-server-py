@@ -1,16 +1,8 @@
-import abc
 import socket
-
 import config
 
 
-class ConnInterface(abc.ABC):
-    @abc.abstractmethod
-    def get_response(self, message: str) -> str:
-        pass
-
-
-class ConnSocket(ConnInterface):
+class ConnSocket:
     buffer_size = 1024
 
     def __init__(self, configs):
