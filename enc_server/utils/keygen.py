@@ -2,6 +2,7 @@ import config
 import os
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
+
 class Keygen:
 
     def __init__(self, configs: dict):
@@ -12,18 +13,13 @@ class Keygen:
         self.key_size = int(configs["keySize"])
         self.nonce_size = 12
 
-    def random_key(self) -> bytes:
-        return AESGCM.generate_key(key_size=self.key_size)
+        self.key = AESGCM.generate_key(self.key_size*8)
+        self.nonce = os.urandom(self.nonce_size)
 
-    def random_nonce(self) -> bytes:
-        return os.urandom(self.nonce_size)
+        self.aesgcm = AESGCM(self.key)
 
-    @staticmethod
-    def encrypt(data: bytes, key: bytes, nonce: bytes) -> bytes:
-        aesgcm = AESGCM(key)
-        return aesgcm.encrypt(nonce, data, None)
+    def encrypt(self, data: bytes) -> bytes:
+        return self.aesgcm.encrypt(self.nonce, data, None)
 
-    @staticmethod
-    def decrypt(data: bytes, key: bytes, nonce: bytes) -> bytes:
-        aesgcm = AESGCM(key)
-        return aesgcm.decrypt(nonce, data, None)
+    def decrypt(self, data: bytes) -> bytes:
+        return self.aesgcm.decrypt(self.nonce, data, None)
