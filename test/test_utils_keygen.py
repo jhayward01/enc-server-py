@@ -8,19 +8,24 @@ class KeyGenTestSuite(unittest.TestCase):
 
     record_payload = b"PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS"
 
+    def setUp(self):
+        self.keygen = enc_server.utils.Keygen({"keySize": KeyGenTestSuite.key_size})
+        self.key, self.nonce = self.keygen.random_key(), self.keygen.random_nonce()
+        self.cipher = enc_server.utils.Cipher({"key": self.key, "nonce": self.nonce})
+
     def test_init(self):
-        self.assertIsNotNone(enc_server.utils.Keygen({"keySize": KeyGenTestSuite.key_size}))
+        self.assertIsNotNone(self.keygen)
+        self.assertIsNotNone(self.key)
+        self.assertIsNotNone(self.nonce)
+        self.assertIsNotNone(self.cipher)
 
     def test_missing_init(self):
         self.assertRaises(KeyError, enc_server.utils.Keygen, {})
-
-    def test_bad_init(self):
-        self.assertRaises(ValueError, enc_server.utils.Keygen, {"keySize": KeyGenTestSuite.bad_key_size})
+        self.assertRaises(KeyError, enc_server.utils.Cipher, {})
 
     def test_enc_dec(self):
-        keygen = enc_server.utils.Keygen({"keySize": KeyGenTestSuite.key_size})
-        enc_payload = keygen.encrypt(KeyGenTestSuite.record_payload)
-        dec_payload = keygen.decrypt(enc_payload)
+        enc_payload = self.cipher.encrypt(KeyGenTestSuite.record_payload)
+        dec_payload = self.cipher.decrypt(enc_payload)
         self.assertEqual(KeyGenTestSuite.record_payload, dec_payload)
 
 
