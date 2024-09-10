@@ -4,23 +4,6 @@ import threading
 import unittest
 
 
-def socket_server():
-    server_host = ConnTestSuite.server_addr.split(":")[0]
-    server_port = int(ConnTestSuite.server_addr.split(":")[1])
-
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-        server.bind((server_host, server_port))
-        server.listen()
-        conn, addr = server.accept()
-        with conn:
-            # print(f"Connected by {addr}")
-            while True:
-                data = conn.recv(ConnTestSuite.buffer_size)
-                if not data:
-                    break
-                conn.sendall(bytes(ConnTestSuite.server_response, 'utf-8'))
-
-
 class ConnTestSuite(unittest.TestCase):
     server_addr = "localhost:7777"
     bad_server_addr = "foobar"
@@ -38,7 +21,7 @@ class ConnTestSuite(unittest.TestCase):
                           {"serverAddr": ConnTestSuite.bad_server_addr})
 
     def test_get_response(self):
-        server = threading.Thread(target=socket_server)
+        server = threading.Thread(target=ConnTestSuite.socket_server)
         server.start()
 
         conn = enc_server.utils.ConnSocket({"serverAddr": ConnTestSuite.server_addr})
@@ -51,6 +34,22 @@ class ConnTestSuite(unittest.TestCase):
         conn = enc_server.utils.ConnSocket({"serverAddr": ConnTestSuite.server_addr})
         self.assertRaises(ConnectionRefusedError, conn.get_response,
                           ConnTestSuite.server_msg)
+
+    @staticmethod
+    def socket_server():
+        server_host = ConnTestSuite.server_addr.split(":")[0]
+        server_port = int(ConnTestSuite.server_addr.split(":")[1])
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
+            server.bind((server_host, server_port))
+            server.listen()
+            conn, addr = server.accept()
+            with conn:
+                while True:
+                    data = conn.recv(ConnTestSuite.buffer_size)
+                    if not data:
+                        break
+                    conn.sendall(bytes(ConnTestSuite.server_response, 'utf-8'))
 
 
 if __name__ == '__main__':
