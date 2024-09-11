@@ -6,8 +6,8 @@ class DbTestSuite(unittest.TestCase):
     record_id = "JTH"
     record_payload = "PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS"
 
-    mongo_uri = "mongodb://localhost:27017/"
-    bad_mongo_uri = "foo://foohost:27017/"
+    mongo_uri = "mongodb://localhost:27017/?timeoutMS=200"
+    bad_mongo_uri = "foo://foohost:27017/?timeoutMS=200"
 
     def setUp(self):
         self.db = None

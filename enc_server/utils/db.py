@@ -17,8 +17,8 @@ class DB:
     def store_record(self, record_id: str, record_payload: str):
         try:
             collection = self.__get_record_collection()
-            id_filter = {"_id": record_id}
-            entry = {"$set": {"_id": record_id, "record": record_payload}}
+            id_filter = {"id": record_id}
+            entry = {"$set": {"id": record_id, "record": record_payload}}
             collection.update_one(id_filter, entry, upsert=True)
         except Exception as err:
             raise RuntimeError(err) from None
@@ -26,7 +26,7 @@ class DB:
     def retrieve_record(self, record_id: str) -> str:
         try:
             collection = self.__get_record_collection()
-            entry = collection.find_one({"_id": record_id})
+            entry = collection.find_one({"id": record_id})
             record_payload = entry["record"]
             return record_payload
         except Exception as err:
@@ -35,7 +35,7 @@ class DB:
     def delete_record(self, record_id: str):
         try:
             collection = self.__get_record_collection()
-            collection.delete_one({"_id": record_id})
+            collection.delete_one({"id": record_id})
         except Exception as err:
             raise RuntimeError(err) from None
 
