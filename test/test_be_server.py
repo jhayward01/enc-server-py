@@ -23,56 +23,56 @@ class ConfigTestSuite(unittest.TestCase):
 
         empty_message = f"\n".encode('utf-8')
         empty_response = server.respond(empty_message)
-        self.assertEqual("ERROR Malformed", empty_response.decode('utf-8').strip()[0:15])
+        self.assertTrue(empty_response.decode('utf-8').strip().startswith("ERROR Malformed"))
 
     def test_unknown_msg(self):
         server = enc_server.be.server.Server(ConfigTestSuite.configs)
 
         unknown_message = f"FOO\n".encode('utf-8')
         unknown_response = server.respond(unknown_message)
-        self.assertEqual("ERROR Malformed", unknown_response.decode('utf-8').strip()[0:15])
+        self.assertTrue(unknown_response.decode('utf-8').strip().startswith("ERROR Malformed"))
 
     def test_bad_store(self):
         server = enc_server.be.server.Server(ConfigTestSuite.bad_configs)
 
         store_message = f"STORE {ConfigTestSuite.id_hex_enc} {ConfigTestSuite.record_hex_enc}\n".encode('utf-8')
         store_response = server.respond(store_message)
-        self.assertEqual("ERROR", store_response.decode('utf-8').strip()[0:5])
+        self.assertTrue(store_response.decode('utf-8').strip().startswith("ERROR"))
 
     def test_malformed_store(self):
         server = enc_server.be.server.Server(ConfigTestSuite.configs)
 
         store_message = f"STORE\n".encode('utf-8')
         store_response = server.respond(store_message)
-        self.assertEqual("ERROR Malformed", store_response.decode('utf-8').strip()[0:15])
+        self.assertTrue(store_response.decode('utf-8').strip().startswith("ERROR Malformed"))
 
     def test_bad_retrieve(self):
         server = enc_server.be.server.Server(ConfigTestSuite.bad_configs)
 
         retrieve_message = f"RETRIEVE {ConfigTestSuite.id_hex_enc}\n".encode('utf-8')
         retrieve_response = server.respond(retrieve_message)
-        self.assertEqual("ERROR", retrieve_response.decode('utf-8').strip()[0:5])
+        self.assertTrue(retrieve_response.decode('utf-8').strip().startswith("ERROR"))
 
     def test_malformed_retrieve(self):
         server = enc_server.be.server.Server(ConfigTestSuite.configs)
 
         retrieve_message = f"RETRIEVE\n".encode('utf-8')
         retrieve_response = server.respond(retrieve_message)
-        self.assertEqual("ERROR Malformed", retrieve_response.decode('utf-8').strip()[0:15])
+        self.assertTrue(retrieve_response.decode('utf-8').strip().startswith("ERROR Malformed"))
 
     def test_bad_delete(self):
         server = enc_server.be.server.Server(ConfigTestSuite.bad_configs)
 
         delete_message = f"DELETE {ConfigTestSuite.id_hex_enc}\n".encode('utf-8')
         delete_response = server.respond(delete_message)
-        self.assertEqual("ERROR", delete_response.decode('utf-8').strip()[0:5])
+        self.assertTrue(delete_response.decode('utf-8').strip().startswith("ERROR"))
 
     def test_malformed_delete(self):
         server = enc_server.be.server.Server(ConfigTestSuite.configs)
 
         delete_message = f"DELETE\n".encode('utf-8')
         delete_response = server.respond(delete_message)
-        self.assertEqual("ERROR Malformed", delete_response.decode('utf-8').strip()[0:15])
+        self.assertTrue(delete_response.decode('utf-8').strip().startswith("ERROR Malformed"))
 
     def test_db(self):
         server = enc_server.be.server.Server(ConfigTestSuite.configs)
