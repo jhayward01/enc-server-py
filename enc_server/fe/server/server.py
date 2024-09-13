@@ -43,8 +43,8 @@ class Server(utils.Responder):
             try:
                 key = bytes.fromhex(fields[2])
                 cipher = utils.Cipher(key, self.keygen.nonce)
-                record_id = cipher.encrypt(fields[1])
-                self.be_client.delete(record_id)
+                record_id_enc = cipher.encrypt(fields[1])
+                self.be_client.delete(record_id_enc)
             except RuntimeError as err:
                 return f"ERROR: {str(err)}\n".encode('utf-8')
             else:

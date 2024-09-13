@@ -9,11 +9,11 @@ class BEClientTestSuite(unittest.TestCase):
     bad_server_addr = "foobar"
     buffer_size = 1024
 
-    id_enc = "396263343233393039616335acc30dd405c51d37675d4e0002a526ae113d56"
+    record_id_enc = "396263343233393039616335acc30dd405c51d37675d4e0002a526ae113d56"
 
-    record_enc = ("396263343233393039616335b6d61c6839a0dda2524d19b4e5d" +
-                  "ac5a1fda8902ad2701ced5c31c89088c3151d039ee27d003b75c3a140141c05da496572142eb" +
-                  "5466c5edb07de33d8ac301f19789fbef68e5c3f280bf4f274e8d2d2d7")
+    record_payload_enc = ("396263343233393039616335b6d61c6839a0dda2524d19b4e5d" +
+                          "ac5a1fda8902ad2701ced5c31c89088c3151d039ee27d003b75c3a140141c05da496572142eb" +
+                          "5466c5edb07de33d8ac301f19789fbef68e5c3f280bf4f274e8d2d2d7")
 
     def setUp(self):
         self.client = enc_server.be.client.Client({"serverAddr": BEClientTestSuite.server_addr})
@@ -36,7 +36,7 @@ class BEClientTestSuite(unittest.TestCase):
         server = threading.Thread(target=BEClientTestSuite.socket_server)
         server.start()
 
-        store_response = self.client.store(BEClientTestSuite.id_enc, BEClientTestSuite.record_enc)
+        store_response = self.client.store(BEClientTestSuite.record_id_enc, BEClientTestSuite.record_payload_enc)
         self.assertEqual("SUCCESS", store_response)
 
         server.join()
@@ -45,8 +45,8 @@ class BEClientTestSuite(unittest.TestCase):
         server = threading.Thread(target=BEClientTestSuite.socket_server)
         server.start()
 
-        retrieve_response = self.client.retrieve(BEClientTestSuite.id_enc)
-        self.assertEqual(BEClientTestSuite.record_enc, retrieve_response)
+        retrieve_response = self.client.retrieve(BEClientTestSuite.record_id_enc)
+        self.assertEqual(BEClientTestSuite.record_payload_enc, retrieve_response)
 
         server.join()
 
@@ -54,7 +54,7 @@ class BEClientTestSuite(unittest.TestCase):
         server = threading.Thread(target=BEClientTestSuite.socket_server)
         server.start()
 
-        delete_response = self.client.delete(BEClientTestSuite.id_enc)
+        delete_response = self.client.delete(BEClientTestSuite.record_id_enc)
         self.assertEqual("", delete_response)
 
         server.join()
@@ -74,11 +74,11 @@ class BEClientTestSuite(unittest.TestCase):
                     if not data:
                         break
                     message, response = data.decode('utf-8').strip(), str()
-                    if message == f"STORE {BEClientTestSuite.id_enc} {BEClientTestSuite.record_enc}":
+                    if message == f"STORE {BEClientTestSuite.record_id_enc} {BEClientTestSuite.record_payload_enc}":
                         response = "SUCCESS\n"
-                    elif message == f"RETRIEVE {BEClientTestSuite.id_enc}":
-                        response = f"{BEClientTestSuite.record_enc}\n"
-                    elif message == f"DELETE {BEClientTestSuite.id_enc}":
+                    elif message == f"RETRIEVE {BEClientTestSuite.record_id_enc}":
+                        response = f"{BEClientTestSuite.record_payload_enc}\n"
+                    elif message == f"DELETE {BEClientTestSuite.record_id_enc}":
                         response = "\n"
                     else:
                         response = "ERROR\n"

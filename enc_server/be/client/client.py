@@ -7,9 +7,12 @@ class Client:
         self.conn = utils.ConnSocket(configs)
 
     def transmit(self, message: str) -> str:
-        response = self.conn.get_response(message).strip()
-        if response.startswith("ERROR"):
-            raise RuntimeError(response)
+        try:
+            response = self.conn.get_response(message).strip()
+            if response.startswith("ERROR"):
+                raise RuntimeError(response)
+        except Exception as err:
+            raise RuntimeError(err) from None
         return response
 
     def store(self, record_id: str, record_payload: str) -> str:
