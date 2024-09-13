@@ -50,7 +50,3 @@ class ConnTestSuite(unittest.TestCase):
                     if not data:
                         break
                     conn.sendall(bytes(ConnTestSuite.server_response, 'utf-8'))
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -38,7 +38,3 @@ class ConfigTestSuite(unittest.TestCase):
                                                           ConfigTestSuite.bad_config_fields)
         self.assertFalse(result)
         self.assertEqual(missing, "foo")
-
-
-if __name__ == '__main__':
-    unittest.main()

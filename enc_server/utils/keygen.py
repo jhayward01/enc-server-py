@@ -4,21 +4,23 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 
 class Cipher:
-    def __init__(self, configs: dict):
-        result, missing = config.verify_configs(configs, ["key", "nonce"])
-        if not result:
-            raise KeyError("Keygen missing configuration " + missing)
-
-        self.key = configs["key"]
-        self.nonce = configs["nonce"]
+    def __init__(self, key: bytes, nonce: bytes):
+        self.key = key
+        self.nonce = nonce
 
         self.aesgcm = AESGCM(self.key)
 
-    def encrypt(self, data: bytes) -> bytes:
-        return self.aesgcm.encrypt(self.nonce, data, None)
+    def encrypt(self, s: str) -> str:
+        data = s.encode('utf-8')
+        enc = self.aesgcm.encrypt(self.nonce, data, None)
+        result = enc.hex()
+        return result
 
-    def decrypt(self, data: bytes) -> bytes:
-        return self.aesgcm.decrypt(self.nonce, data, None)
+    def decrypt(self, s: str) -> str:
+        data = bytes.fromhex(s)
+        dec = self.aesgcm.decrypt(self.nonce, data, None)
+        result = dec.decode('utf-8')
+        return result
 
 
 class Keygen:
@@ -30,8 +32,8 @@ class Keygen:
         self.key_size = int(configs["keySize"]) * 8
         self.nonce_size = 12
 
-    def random_key(self):
+    def random_key(self) -> bytes:
         return AESGCM.generate_key(self.key_size)
 
-    def random_nonce(self):
+    def random_nonce(self) -> bytes:
         return os.urandom(self.nonce_size)
