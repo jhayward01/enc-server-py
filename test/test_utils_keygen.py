@@ -9,8 +9,8 @@ class KeyGenTestSuite(unittest.TestCase):
     record_payload = "PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS"
 
     def setUp(self):
-        self.keygen = enc_server.utils.Keygen({"keySize": KeyGenTestSuite.key_size})
-        self.key, self.nonce = self.keygen.random_key(), self.keygen.random_nonce()
+        self.keygen = enc_server.utils.Keygen({"keySize": KeyGenTestSuite.key_size, 'idNonceStr': '9bc423909ac5'})
+        self.key, self.nonce = self.keygen.random_key(), self.keygen.nonce
         self.cipher = enc_server.utils.Cipher(self.key, self.nonce)
 
     def test_init(self):

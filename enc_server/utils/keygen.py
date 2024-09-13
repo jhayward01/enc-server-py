@@ -25,15 +25,12 @@ class Cipher:
 
 class Keygen:
     def __init__(self, configs: dict):
-        result, missing = config.verify_configs(configs, ["keySize"])
+        result, missing = config.verify_configs(configs, ["keySize", "idNonceStr"])
         if not result:
             raise KeyError("Keygen missing configuration " + missing)
 
         self.key_size = int(configs["keySize"]) * 8
-        self.nonce_size = 12
+        self.nonce = configs["idNonceStr"].encode('utf-8')
 
     def random_key(self) -> bytes:
         return AESGCM.generate_key(self.key_size)
-
-    def random_nonce(self) -> bytes:
-        return os.urandom(self.nonce_size)
