@@ -6,13 +6,13 @@ class Client:
     def __init__(self, configs: dict):
         self.conn = utils.ConnSocket(configs)
 
-    def transmit(self, message:str):
-        response = self.conn.get_response(message)
+    def transmit(self, message: str) -> str:
+        response = self.conn.get_response(message).strip()
         if response.startswith("ERROR"):
             raise RuntimeError(response)
         return response
 
-    def store(self, record_id: str, record_payload: str):
+    def store(self, record_id: str, record_payload: str) -> str:
         return self.transmit(f"STORE {record_id} {record_payload}\n")
 
     def retrieve(self, record_id: str) -> str:
