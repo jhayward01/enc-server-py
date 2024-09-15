@@ -7,20 +7,17 @@ class Cipher:
     def __init__(self, key: bytes, nonce: bytes):
         self.key = key
         self.nonce = nonce
-
         self.aesgcm = AESGCM(self.key)
 
     def encrypt(self, s: str) -> str:
         data = s.encode('utf-8')
         enc = self.aesgcm.encrypt(self.nonce, data, None)
-        result = enc.hex()
-        return result
+        return enc.hex()
 
     def decrypt(self, s: str) -> str:
         data = bytes.fromhex(s)
         dec = self.aesgcm.decrypt(self.nonce, data, None)
-        result = dec.decode('utf-8')
-        return result
+        return dec.decode('utf-8')
 
 
 class Keygen:

@@ -8,7 +8,7 @@ class Client:
 
     def transmit(self, message: str) -> str:
         try:
-            response = self.conn.get_response(message).strip()
+            response = self.conn.get_response(message)
             if response.startswith("ERROR"):
                 raise RuntimeError(response)
         except Exception as err:

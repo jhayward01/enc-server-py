@@ -33,7 +33,7 @@ class Server(utils.Responder):
                 key = bytes.fromhex(fields[2])
                 cipher = utils.Cipher(key, self.keygen.nonce)
                 record_id_enc = cipher.encrypt(fields[1])
-                record_payload_enc = self.be_client.retrieve(record_id_enc).strip()
+                record_payload_enc = self.be_client.retrieve(record_id_enc)
                 record_payload = cipher.decrypt(record_payload_enc)
             except RuntimeError as err:
                 return f"ERROR: {str(err)}\n".encode('utf-8')

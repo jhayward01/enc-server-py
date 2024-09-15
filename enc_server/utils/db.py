@@ -27,8 +27,7 @@ class DB:
         try:
             collection = self.__get_record_collection()
             entry = collection.find_one({"id": record_id})
-            record_payload = entry["record"]
-            return record_payload
+            return entry["record"]
         except Exception as err:
             raise RuntimeError(err) from None
 
