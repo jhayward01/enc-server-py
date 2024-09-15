@@ -18,34 +18,43 @@ class Server(utils.Responder):
             return f"ERROR Malformed request: {s}\n".encode('utf-8')
 
         if fields[0] == "STORE":
-            try:
-                key = self.keygen.random_key()
-                cipher = utils.Cipher(key, self.keygen.nonce)
-                record_id_enc = cipher.encrypt(fields[1])
-                record_payload_enc = cipher.encrypt(fields[2])
-                self.be_client.store(record_id_enc, record_payload_enc)
-            except RuntimeError as err:
-                return f"ERROR: {err}\n".encode('utf-8')
-            else:
-                return key
+            return self.store_record(fields)
         elif fields[0] == "RETRIEVE":
-            try:
-                key = bytes.fromhex(fields[2])
-                cipher = utils.Cipher(key, self.keygen.nonce)
-                record_id_enc = cipher.encrypt(fields[1])
-                record_payload_enc = self.be_client.retrieve(record_id_enc)
-                record_payload = cipher.decrypt(record_payload_enc)
-            except RuntimeError as err:
-                return f"ERROR: {str(err)}\n".encode('utf-8')
-            else:
-                return (record_payload + "\n").encode('utf-8')
+            return self.retrieve_record(fields)
         elif fields[0] == "DELETE":
-            try:
-                key = bytes.fromhex(fields[2])
-                cipher = utils.Cipher(key, self.keygen.nonce)
-                record_id_enc = cipher.encrypt(fields[1])
-                self.be_client.delete(record_id_enc)
-            except RuntimeError as err:
-                return f"ERROR: {str(err)}\n".encode('utf-8')
-            else:
-                return "\n".encode('utf-8')
+            return self.delete_record(fields)
+
+    def store_record(self, fields: list) -> bytes:
+        try:
+            key = self.keygen.random_key()
+            cipher = utils.Cipher(key, self.keygen.nonce)
+            record_id_enc = cipher.encrypt(fields[1])
+            record_payload_enc = cipher.encrypt(fields[2])
+            self.be_client.store(record_id_enc, record_payload_enc)
+        except RuntimeError as err:
+            return f"ERROR: {err}\n".encode('utf-8')
+        else:
+            return key
+
+    def retrieve_record(self, fields: list) -> bytes:
+        try:
+            key = bytes.fromhex(fields[2])
+            cipher = utils.Cipher(key, self.keygen.nonce)
+            record_id_enc = cipher.encrypt(fields[1])
+            record_payload_enc = self.be_client.retrieve(record_id_enc)
+            record_payload = cipher.decrypt(record_payload_enc)
+        except RuntimeError as err:
+            return f"ERROR: {str(err)}\n".encode('utf-8')
+        else:
+            return (record_payload + "\n").encode('utf-8')
+
+    def delete_record(self, fields: list) -> bytes:
+        try:
+            key = bytes.fromhex(fields[2])
+            cipher = utils.Cipher(key, self.keygen.nonce)
+            record_id_enc = cipher.encrypt(fields[1])
+            self.be_client.delete(record_id_enc)
+        except RuntimeError as err:
+            return f"ERROR: {str(err)}\n".encode('utf-8')
+        else:
+            return "\n".encode('utf-8')
