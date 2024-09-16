@@ -1,7 +1,6 @@
 import os
 import datetime
 import logging
-from io import TextIOWrapper
 
 default_dir = "/tmp/enc-server-go-logs"
 

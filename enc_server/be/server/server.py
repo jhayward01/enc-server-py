@@ -46,3 +46,6 @@ class Server(utils.Responder):
             return f"ERROR: {str(err)}\n".encode('utf-8')
         else:
             return "\n".encode('utf-8')
+
+    def start(self):
+        self.socket_io.start()

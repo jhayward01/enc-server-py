@@ -1,8 +1,8 @@
-from .config import *
+from .configfile import *
 from .conn import *
 from .db import *
 from .keygen import *
 from .logger import *
 from .socketio import *
 
-__all__ = [config, conn, db, keygen, logger, socketio]
+__all__ = [configfile, conn, db, keygen, logger, socketio]

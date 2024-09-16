@@ -1,6 +1,7 @@
 from abc import ABC
-import config
 import socket
+
+from enc_server.utils import ConfigFile
 
 
 class Responder(ABC):
@@ -13,7 +14,7 @@ class SocketIO:
     host = "localhost"
 
     def __init__(self, configs: dict, responder: Responder):
-        result, missing = config.verify_configs(configs, ["port"])
+        result, missing = ConfigFile.verify_configs(configs, ["port"])
         if not result:
             raise KeyError("Keygen missing configuration " + missing)
 
