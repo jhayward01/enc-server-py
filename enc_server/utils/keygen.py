@@ -1,6 +1,6 @@
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
-from enc_server.utils import ConfigFile
+import enc_server
 
 
 class Cipher:
@@ -22,7 +22,7 @@ class Cipher:
 
 class Keygen:
     def __init__(self, configs: dict):
-        result, missing = ConfigFile.verify_configs(configs, ["keySize", "idNonceStr"])
+        result, missing = enc_server.utils.ConfigFile.verify_configs(configs, ["keySize", "idNonceStr"])
         if not result:
             raise KeyError("Keygen missing configuration " + missing)
 

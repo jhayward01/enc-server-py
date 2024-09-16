@@ -1,6 +1,7 @@
-import enc_server
 import logging
 import unittest
+
+import enc_server
 
 
 class LoggerTestSuite(unittest.TestCase):

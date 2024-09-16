@@ -1,10 +1,10 @@
-from enc_server import utils
+import enc_server
 
 
 class Client:
 
     def __init__(self, configs: dict):
-        self.conn = utils.ConnSocket(configs)
+        self.conn = enc_server.utils.ConnSocket(configs)
 
     def transmit(self, message: str) -> str:
         try:

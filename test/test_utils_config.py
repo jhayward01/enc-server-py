@@ -1,7 +1,6 @@
-import os
+import unittest
 
 import enc_server
-import unittest
 
 
 class ConfigTestSuite(unittest.TestCase):

@@ -1,7 +1,7 @@
 import pymongo
 from pymongo.collection import Collection, Mapping, Any
 
-from enc_server.utils import ConfigFile
+import enc_server
 
 
 class DB:
@@ -9,7 +9,7 @@ class DB:
     db_collection = "records"
 
     def __init__(self, configs: dict):
-        result, missing = ConfigFile.verify_configs(configs, ["mongoURI"])
+        result, missing = enc_server.utils.ConfigFile.verify_configs(configs, ["mongoURI"])
         if not result:
             raise KeyError("DB missing configuration " + missing)
 

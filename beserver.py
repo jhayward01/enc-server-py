@@ -1,4 +1,5 @@
 import logging
+
 import enc_server
 
 module_name = "beserver"

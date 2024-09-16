@@ -1,7 +1,8 @@
-import enc_server
 import socket
 import threading
 import unittest
+
+import enc_server
 
 
 class FEClientTestSuite(unittest.TestCase):

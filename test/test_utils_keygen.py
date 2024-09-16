@@ -1,5 +1,6 @@
-import enc_server
 import unittest
+
+import enc_server
 
 
 class KeyGenTestSuite(unittest.TestCase):
