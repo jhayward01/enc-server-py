@@ -7,7 +7,7 @@ class LoggerTestSuite(unittest.TestCase):
     expected_lines = 4
 
     def test_start_logger(self):
-        log_path = enc_server.utils.start_logger("beclient")
+        log_path = enc_server.utils.Logger.start_logger("beclient")
 
         logging.debug("Debug message")
         logging.info("Info message")

@@ -1,6 +1,5 @@
 import enc_server
 import socket
-import socketio
 import threading
 import unittest
 
@@ -13,7 +12,7 @@ class SocketioTestSuite(unittest.TestCase):
     msg = b"Hi"
     response = b"Hello"
 
-    class TestResponder(socketio.Responder):
+    class TestResponder(enc_server.utils.socketio.Responder):
         def respond(self, msg: bytes) -> bytes:
             return SocketioTestSuite.response
 
