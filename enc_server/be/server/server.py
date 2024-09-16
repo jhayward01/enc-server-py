@@ -1,3 +1,5 @@
+import logging
+
 from enc_server import utils
 
 
@@ -11,6 +13,7 @@ class Server(utils.Responder):
     def respond(self, msg: bytes) -> bytes:
         s = msg.decode('utf-8').strip()
         fields = s.split()
+        logging.info(fields)
 
         if (not fields or fields[0] not in Server.expected_fields or
                 len(fields) != Server.expected_fields[fields[0]]):

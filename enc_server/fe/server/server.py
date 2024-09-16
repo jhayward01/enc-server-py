@@ -1,3 +1,5 @@
+import logging
+
 from enc_server import utils, be
 
 
@@ -10,19 +12,23 @@ class Server(utils.Responder):
         self.socket_io = utils.SocketIO(configs, self)
 
     def respond(self, msg: bytes) -> bytes:
+        result = bytes
         s = msg.decode('utf-8').strip()
         fields = s.split()
+        logging.info(fields)
 
         if (not fields or fields[0] not in Server.expected_fields or
                 len(fields) != Server.expected_fields[fields[0]]):
-            return f"ERROR Malformed request: {s}\n".encode('utf-8')
-
-        if fields[0] == "STORE":
-            return self.store_record(fields)
+            result = f"ERROR Malformed request: {s}\n".encode('utf-8')
+        elif fields[0] == "STORE":
+            result = self.store_record(fields)
         elif fields[0] == "RETRIEVE":
-            return self.retrieve_record(fields)
+            result = self.retrieve_record(fields)
         elif fields[0] == "DELETE":
-            return self.delete_record(fields)
+            result = self.delete_record(fields)
+
+        logging.info(result)
+        return result
 
     def store_record(self, fields: list) -> bytes:
         try:
