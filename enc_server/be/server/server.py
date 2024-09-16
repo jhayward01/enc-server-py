@@ -47,5 +47,5 @@ class Server(utils.Responder):
         else:
             return "\n".encode('utf-8')
 
-    def start(self):
-        self.socket_io.start()
+    def start(self, server_config=False):
+        self.socket_io.start(server_config=server_config)

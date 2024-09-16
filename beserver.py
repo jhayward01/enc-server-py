@@ -12,8 +12,10 @@ if __name__ == '__main__':
         logging.info(f"Started {module_name}")
 
         configs = enc_server.utils.ConfigFile.load_configs(config_path)
+        logging.info(configs[config_name])
+
         server = enc_server.be.server.Server(configs[config_name])
 
-        server.start()
+        server.start(server_config=True)
     except Exception as err:
         logging.fatal(err)
