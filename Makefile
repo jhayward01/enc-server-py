@@ -41,10 +41,10 @@ feserver:
 feclient:
 	PYTHONPATH=. python cmd/feclient/feclient.py
 
-# make servers             # Run BE/FE servers in docker-compose
-servers:
+# make up                  # Run BE/FE servers in docker-compose
+up:
 	docker-compose up -d --build
 
-# make stop                # Stop BE/FE servers in docker-compose
-stop:
+# make down                # Stop BE/FE servers in docker-compose
+down:
 	docker-compose down
