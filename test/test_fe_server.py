@@ -37,56 +37,56 @@ class FEServerTestSuite(unittest.TestCase):
 
         empty_message = f"\n".encode('utf-8')
         empty_response = server.respond(empty_message)
-        self.assertTrue(empty_response.decode('utf-8').strip().startswith("ERROR Malformed"))
+        self.assertTrue(empty_response.decode('utf-8').startswith("ERROR Malformed"))
 
     def test_unknown_msg(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.configs)
 
         unknown_message = f"FOO\n".encode('utf-8')
         unknown_response = server.respond(unknown_message)
-        self.assertTrue(unknown_response.decode('utf-8').strip().startswith("ERROR Malformed"))
+        self.assertTrue(unknown_response.decode('utf-8').startswith("ERROR Malformed"))
 
     def test_bad_store(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.bad_configs)
 
         store_message = f"STORE {FEServerTestSuite.record_id} {FEServerTestSuite.record_payload}\n".encode('utf-8')
         store_response = server.respond(store_message)
-        self.assertTrue(store_response.decode('utf-8').strip().startswith("ERROR"))
+        self.assertTrue(store_response.decode('utf-8').startswith("ERROR"))
 
     def test_malformed_store(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.configs)
 
         store_message = f"STORE\n".encode('utf-8')
         store_response = server.respond(store_message)
-        self.assertTrue(store_response.decode('utf-8').strip().startswith("ERROR Malformed"))
+        self.assertTrue(store_response.decode('utf-8').startswith("ERROR Malformed"))
 
     def test_bad_retrieve(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.bad_configs)
 
         retrieve_message = f"RETRIEVE {FEServerTestSuite.record_id} 12341234123412341234123412341234\n".encode('utf-8')
         retrieve_response = server.respond(retrieve_message)
-        self.assertTrue(retrieve_response.decode('utf-8').strip().startswith("ERROR"))
+        self.assertTrue(retrieve_response.decode('utf-8').startswith("ERROR"))
 
     def test_malformed_retrieve(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.configs)
 
         retrieve_message = f"RETRIEVE {FEServerTestSuite.record_id}\n".encode('utf-8')
         retrieve_response = server.respond(retrieve_message)
-        self.assertTrue(retrieve_response.decode('utf-8').strip().startswith("ERROR"))
+        self.assertTrue(retrieve_response.decode('utf-8').startswith("ERROR"))
 
     def test_bad_delete(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.bad_configs)
 
         delete_message = f"DELETE {FEServerTestSuite.record_id}\n".encode('utf-8')
         delete_response = server.respond(delete_message)
-        self.assertTrue(delete_response.decode('utf-8').strip().startswith("ERROR"))
+        self.assertTrue(delete_response.decode('utf-8').startswith("ERROR"))
 
     def test_malformed_delete(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.configs)
 
         delete_message = f"DELETE\n".encode('utf-8')
         delete_response = server.respond(delete_message)
-        self.assertTrue(delete_response.decode('utf-8').strip().startswith("ERROR Malformed"))
+        self.assertTrue(delete_response.decode('utf-8').startswith("ERROR Malformed"))
 
     def test_db(self):
         server = enc_server.fe.server.Server(FEServerTestSuite.configs)
@@ -97,12 +97,12 @@ class FEServerTestSuite(unittest.TestCase):
         store_response = server.respond(store_message)
         self.assertIsNotNone(store_response)
 
-        key = store_response.hex()
+        key_str = store_response.decode('utf-8').strip()
 
-        retrieve_message = f"RETRIEVE {FEServerTestSuite.record_id} {key}\n".encode('utf-8')
+        retrieve_message = f"RETRIEVE {FEServerTestSuite.record_id} {key_str}\n".encode('utf-8')
         retrieve_response = server.respond(retrieve_message)
         self.assertEqual(FEServerTestSuite.record_payload, retrieve_response.decode('utf-8').strip())
 
-        delete_message = f"DELETE {FEServerTestSuite.record_id} {key}\n".encode('utf-8')
+        delete_message = f"DELETE {FEServerTestSuite.record_id} {key_str}\n".encode('utf-8')
         delete_response = server.respond(delete_message)
         self.assertEqual("", delete_response.decode('utf-8').strip())

@@ -15,7 +15,7 @@ class FEClientTestSuite(unittest.TestCase):
     record_payload_enc = ("396263343233393039616335b6d61c6839a0dda2524d19b4e5d" +
                           "ac5a1fda8902ad2701ced5c31c89088c3151d039ee27d003b75c3a140141c05da496572142eb" +
                           "5466c5edb07de33d8ac301f19789fbef68e5c3f280bf4f274e8d2d2d7")
-    record_key = "12341234123412341234123412341234"
+    record_key = "06f1be76f38d296ddb8070dc74e37327970ffee6fad1a8ecc9b9145eedd0c3df"
 
     def setUp(self):
         self.client = enc_server.fe.client.Client({"serverAddr": FEClientTestSuite.server_addr})

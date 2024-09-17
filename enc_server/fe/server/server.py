@@ -37,10 +37,11 @@ class Server(utils.Responder):
             record_id_enc = cipher.encrypt(fields[1])
             record_payload_enc = cipher.encrypt(fields[2])
             self.be_client.store(record_id_enc, record_payload_enc)
+            key_str = key.hex()
         except RuntimeError as err:
             return f"ERROR: {err}\n".encode('utf-8')
         else:
-            return key
+            return f"{key_str}\n".encode('utf-8')
 
     def retrieve_record(self, fields: list) -> bytes:
         try:
