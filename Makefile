@@ -6,47 +6,39 @@ help:
 tests:
 	python -m unittest discover -s /Users/johnny/PycharmProjects/enc-server-py/test -t /Users/johnny/PycharmProjects/enc-server-py/test
 
-## make venv                # Make new virtual environment
-#venv:
-#	python -m venv venv
-#
-## make activate			   # Activate virtual environment
-#activate:
-#	source venv_cli/bin/activate
-
-install:					# Install requirements
+install:				   # Install requirements
 	pip install -r requirements.txt
 
-# make server-be-cmd       # Run BE server in terminal
-server-be-cmd:
+# make beserver-cmd        # Run BE server in terminal
+beserver-cmd:
 	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/beserver/beserver.py
 
-# make client-be-cmd       # Run BE client in terminal
-client-be-cmd:
+# make beclient-cmd        # Run BE client in terminal
+beclient-cmd:
 	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/beclient/beclient.py
 
-# make server-fe-cmd       # Run FE server in terminal
-server-fe-cmd:
+# make feserver-cmd        # Run FE server in terminal
+feserver-cmd:
 	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/feserver/feserver.py
 
-# make client-fe-cmd       # Run FE client in terminal
-client-fe-cmd:
+# make feclient-cmd        # Run FE client in terminal
+feclient-cmd:
 	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/feclient/feclient.py
 
-# make server-be           # Run BE server
-server-be:
+# make beserver            # Run BE server
+beserver:
 	PYTHONPATH=. python cmd/beserver/beserver.py
 
-# make client-be           # Run BE client
-client-be:
+# make beclient            # Run BE client
+beclient:
 	PYTHONPATH=. python cmd/beclient/beclient.py
 
-# make server-fe           # Run FE server
-server-fe:
+# make feserver            # Run FE server
+feserver:
 	PYTHONPATH=. python cmd/feserver/feserver.py
 
-# make client-fe           # Run FE client
-client-fe:
+# make feclient            # Run FE client
+feclient:
 	PYTHONPATH=. python cmd/feclient/feclient.py
 
 # make servers             # Run BE/FE servers in docker-compose

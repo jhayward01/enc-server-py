@@ -11,44 +11,47 @@ class Server(utils.Responder):
         self.socket_io = utils.SocketIO(configs, self)
 
     def respond(self, msg: bytes) -> bytes:
+        result = str()
         s = msg.decode('utf-8').strip()
+        logging.info(f"BE Server processing '{s}'")
         fields = s.split()
-        logging.info(fields)
 
         if (not fields or fields[0] not in Server.expected_fields or
                 len(fields) != Server.expected_fields[fields[0]]):
-            return f"ERROR Malformed request: {s}\n".encode('utf-8')
-
-        if fields[0] == "STORE":
-            return self.store_record(fields)
+            result = f"ERROR Malformed request: {s}"
+        elif fields[0] == "STORE":
+            result = self.store_record(fields)
         elif fields[0] == "RETRIEVE":
-            return self.retrieve_record(fields)
+            result = self.retrieve_record(fields)
         elif fields[0] == "DELETE":
-            return self.delete_record(fields)
+            result = self.delete_record(fields)
 
-    def store_record(self, fields: list) -> bytes:
+        logging.info(f"BE Server returning '{result}'")
+        return (result + '\n').encode('utf-8')
+
+    def store_record(self, fields: list) -> str:
         try:
             self.db.store_record(fields[1], fields[2])
         except RuntimeError as err:
-            return ("ERROR: " + str(err) + "\n").encode('utf-8')
+            return "ERROR: " + str(err)
         else:
-            return "SUCCESS\n".encode('utf-8')
+            return "SUCCESS"
 
-    def retrieve_record(self, fields: list) -> bytes:
+    def retrieve_record(self, fields: list) -> str:
         try:
             payload = self.db.retrieve_record(fields[1])
         except RuntimeError as err:
-            return f"ERROR: {str(err)}\n".encode('utf-8')
+            return f"ERROR: {err}"
         else:
-            return (payload + "\n").encode('utf-8')
+            return payload
 
-    def delete_record(self, fields: list) -> bytes:
+    def delete_record(self, fields: list) -> str:
         try:
             self.db.delete_record(fields[1])
         except RuntimeError as err:
-            return f"ERROR: {str(err)}\n".encode('utf-8')
+            return f"ERROR: {err}"
         else:
-            return "\n".encode('utf-8')
+            return "SUCCESS"
 
     def start(self, server_config=False):
         self.socket_io.start(server_config=server_config)

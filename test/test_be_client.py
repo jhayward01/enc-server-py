@@ -56,7 +56,7 @@ class BEClientTestSuite(unittest.TestCase):
         server.start()
 
         delete_response = self.client.delete(BEClientTestSuite.record_id_enc)
-        self.assertEqual("", delete_response)
+        self.assertEqual("SUCCESS", delete_response)
 
         server.join()
 
@@ -80,7 +80,7 @@ class BEClientTestSuite(unittest.TestCase):
                     elif message == f"RETRIEVE {BEClientTestSuite.record_id_enc}":
                         response = f"{BEClientTestSuite.record_payload_enc}\n"
                     elif message == f"DELETE {BEClientTestSuite.record_id_enc}":
-                        response = "\n"
+                        response = "SUCCESS\n"
                     else:
                         response = "ERROR\n"
                     conn.sendall(response.encode('utf-8'))

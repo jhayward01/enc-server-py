@@ -41,6 +41,15 @@ class FEClientTestSuite(unittest.TestCase):
 
         server.join()
 
+    def test_delete(self):
+        server = threading.Thread(target=FEClientTestSuite.socket_server)
+        server.start()
+
+        delete_response = self.client.delete(FEClientTestSuite.record_id, FEClientTestSuite.record_key)
+        self.assertEqual("SUCCESS", delete_response)
+
+        server.join()
+
     @staticmethod
     def socket_server():
         server_host = FEClientTestSuite.server_addr.split(":")[0]
@@ -61,7 +70,7 @@ class FEClientTestSuite(unittest.TestCase):
                     elif message == f"RETRIEVE {FEClientTestSuite.record_id} {FEClientTestSuite.record_key}":
                         response = f"{FEClientTestSuite.record_payload}\n"
                     elif message == f"DELETE {FEClientTestSuite.record_id} {FEClientTestSuite.record_key}":
-                        response = "\n"
+                        response = "SUCCESS\n"
                     else:
                         response = "ERROR\n"
                     conn.sendall(response.encode('utf-8'))

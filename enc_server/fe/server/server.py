@@ -12,14 +12,14 @@ class Server(utils.Responder):
         self.socket_io = utils.SocketIO(configs, self)
 
     def respond(self, msg: bytes) -> bytes:
-        result = bytes
+        result = str()
         s = msg.decode('utf-8').strip()
+        logging.info(f"FE Server processing '{s}'")
         fields = s.split()
-        logging.info(fields)
 
         if (not fields or fields[0] not in Server.expected_fields or
                 len(fields) != Server.expected_fields[fields[0]]):
-            result = f"ERROR Malformed request: {s}\n".encode('utf-8')
+            result = f"ERROR Malformed request: {s}\n"
         elif fields[0] == "STORE":
             result = self.store_record(fields)
         elif fields[0] == "RETRIEVE":
@@ -27,10 +27,10 @@ class Server(utils.Responder):
         elif fields[0] == "DELETE":
             result = self.delete_record(fields)
 
-        logging.info(result)
-        return result
+        logging.info(f"FE Server returning '{result}'")
+        return (result + '\n').encode('utf-8')
 
-    def store_record(self, fields: list) -> bytes:
+    def store_record(self, fields: list) -> str:
         try:
             key = self.keygen.random_key()
             cipher = utils.Cipher(key, self.keygen.nonce)
@@ -39,11 +39,11 @@ class Server(utils.Responder):
             self.be_client.store(record_id_enc, record_payload_enc)
             key_str = key.hex()
         except RuntimeError as err:
-            return f"ERROR: {err}\n".encode('utf-8')
+            return f"ERROR: {err}"
         else:
-            return f"{key_str}\n".encode('utf-8')
+            return f"{key_str}"
 
-    def retrieve_record(self, fields: list) -> bytes:
+    def retrieve_record(self, fields: list) -> str:
         try:
             key = bytes.fromhex(fields[2])
             cipher = utils.Cipher(key, self.keygen.nonce)
@@ -51,20 +51,20 @@ class Server(utils.Responder):
             record_payload_enc = self.be_client.retrieve(record_id_enc)
             record_payload = cipher.decrypt(record_payload_enc)
         except RuntimeError as err:
-            return f"ERROR: {str(err)}\n".encode('utf-8')
+            return f"ERROR: {err}"
         else:
-            return (record_payload + "\n").encode('utf-8')
+            return record_payload
 
-    def delete_record(self, fields: list) -> bytes:
+    def delete_record(self, fields: list) -> str:
         try:
             key = bytes.fromhex(fields[2])
             cipher = utils.Cipher(key, self.keygen.nonce)
             record_id_enc = cipher.encrypt(fields[1])
             self.be_client.delete(record_id_enc)
         except RuntimeError as err:
-            return f"ERROR: {str(err)}\n".encode('utf-8')
+            return f"ERROR: {err}"
         else:
-            return "\n".encode('utf-8')
+            return "SUCCESS"
 
     def start(self, server_config=False):
         self.socket_io.start(server_config=server_config)

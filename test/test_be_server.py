@@ -90,4 +90,4 @@ class BEServerTestSuite(unittest.TestCase):
 
         delete_message = f"DELETE {BEServerTestSuite.record_id_enc}\n".encode('utf-8')
         delete_response = server.respond(delete_message)
-        self.assertEqual("", delete_response.decode('utf-8').strip())
+        self.assertEqual("SUCCESS", delete_response.decode('utf-8').strip())
