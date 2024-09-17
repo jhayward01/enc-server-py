@@ -43,8 +43,8 @@ feclient:
 
 # make up                  # Run BE/FE servers in docker-compose
 up:
-	docker-compose up -d --build
+	docker compose up -d --build
 
 # make down                # Stop BE/FE servers in docker-compose
 down:
-	docker-compose down
+	docker compose down
