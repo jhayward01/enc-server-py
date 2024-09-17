@@ -14,7 +14,7 @@ if __name__ == '__main__':
         logging.info(f"Started {module_name}")
 
         configs = enc_server.utils.ConfigFile.load_configs(config_path)
-        logging.info(configs[config_name])
+        logging.info(dict(configs[config_name], **configs[params_name]))
 
         client = enc_server.fe.client.Client(configs[config_name])
 
