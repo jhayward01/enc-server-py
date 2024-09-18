@@ -11,19 +11,19 @@ install:				   # Install requirements
 
 # make beserver-cmd        # Run BE server in terminal
 beserver-cmd:
-	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/beserver/beserver.py
+	ENC_SERVER_PY_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/beserver/beserver.py
 
 # make beclient-cmd        # Run BE client in terminal
 beclient-cmd:
-	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/beclient/beclient.py
+	ENC_SERVER_PY_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/beclient/beclient.py
 
 # make feserver-cmd        # Run FE server in terminal
 feserver-cmd:
-	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/feserver/feserver.py
+	ENC_SERVER_PY_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/feserver/feserver.py
 
 # make feclient-cmd        # Run FE client in terminal
 feclient-cmd:
-	ENC_SERVER_GO_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/feclient/feclient.py
+	ENC_SERVER_PY_CONFIG_PATH='config/config.cmd.yaml' PYTHONPATH=. python cmd/feclient/feclient.py
 
 # make beserver            # Run BE server
 beserver:
