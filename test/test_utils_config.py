@@ -12,7 +12,7 @@ class ConfigTestSuite(unittest.TestCase):
         'feServerConfigs': {'keySize': '32', 'idKeyStr': 'vkAZAarLbZ6w0kmL2HJP3eU1ODCgVj4k',
                             'idNonceStr': '9bc423909ac5', 'port': '7777'},
         'beServerConfigs': {'port': '8888', 'mongoURI': 'mongodb://user:pass@mongodb'},
-        'beClientConfigs': {'serverAddr': 'enc-server-go-be:8888'},
+        'beClientConfigs': {'serverAddr': 'enc-server-py-be:8888'},
         'testParams': {'id': 'JTH', 'record': 'PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS'}
     }
 
