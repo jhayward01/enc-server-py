@@ -19,7 +19,7 @@ services:
 #    deploy:
 #      restart_policy:
 #        condition: on-failure
-#    entrypoint: make server-be
+#    entrypoint: make beserver
 #    hostname: enc-server-py-be
 
   enc-server-py-fe:
