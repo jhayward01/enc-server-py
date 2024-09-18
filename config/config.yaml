@@ -7,12 +7,14 @@
         "keySize": "32",
         "idKeyStr": "vkAZAarLbZ6w0kmL2HJP3eU1ODCgVj4k",
         "idNonceStr": "9bc423909ac5",
-        "port": "7777"
+        "port": "7777",
+        "useExtIP": "True"
     },
     
     "beServerConfigs": {
         "port": "8888",
-        "mongoURI": "mongodb://user:pass@mongodb"
+        "useExtIP": "True",
+        "mongoURI": "mongodb://user:pass@mongodb",
     },
     
     "beClientConfigs": {

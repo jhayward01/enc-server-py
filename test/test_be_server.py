@@ -4,8 +4,8 @@ import enc_server
 
 
 class BEServerTestSuite(unittest.TestCase):
-    configs = {'port': '8888', 'mongoURI': 'mongodb://localhost:27017/?timeoutMS=200'}
-    bad_configs = {'port': '8888', 'mongoURI': 'mongodb://foo:27017/?timeoutMS=200'}
+    configs = {'port': '8888', 'useExtIP': 'False', 'mongoURI': 'mongodb://localhost:27017/?timeoutMS=200'}
+    bad_configs = {'port': '8888', 'useExtIP': 'False', 'mongoURI': 'mongodb://foo:27017/?timeoutMS=200'}
 
     record_id_enc = "396263343233393039616335acc30dd405c51d37675d4e0002a526ae113d56"
 

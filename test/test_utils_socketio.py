@@ -17,7 +17,8 @@ class SocketioTestSuite(unittest.TestCase):
 
     def setUp(self):
         self.responder = SocketioTestSuite.TestResponder()
-        self.socket_io = enc_server.utils.SocketIO({"port": SocketioTestSuite.port}, self.responder)
+        self.socket_io = enc_server.utils.SocketIO({"port": SocketioTestSuite.port, "useExtIP": "False"},
+                                                   self.responder)
 
     def test_init(self):
         self.assertIsNotNone(self.responder)

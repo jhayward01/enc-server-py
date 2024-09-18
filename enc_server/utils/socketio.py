@@ -15,7 +15,7 @@ class SocketIO:
     host = "localhost"
 
     def __init__(self, configs: dict, responder: Responder):
-        result, missing = enc_server.utils.ConfigFile.verify_configs(configs, ["port"])
+        result, missing = enc_server.utils.ConfigFile.verify_configs(configs, ["port", "useExtIP"])
         if not result:
             raise KeyError("SocketIO missing configuration " + missing)
 
