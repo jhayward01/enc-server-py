@@ -2,36 +2,36 @@ version: '3.8'
 
 services:
 
-  mongodb:
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=user
-      - MONGO_INITDB_ROOT_PASSWORD=pass
-    image: mongodb/mongodb-community-server:6.0-ubi8
-    volumes:
-      - enc-server-py-volume:/data/db
-
-  enc-server-py-be:
-    build:
-      context: ./
-    container_name: enc-server-py-be
-    depends_on:
-      - mongodb
-    deploy:
-      restart_policy:
-        condition: on-failure
-    entrypoint: make server-be
-    hostname: enc-server-py-be
+#  mongodb:
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=user
+#      - MONGO_INITDB_ROOT_PASSWORD=pass
+#    image: mongodb/mongodb-community-server:6.0-ubi8
+#    volumes:
+#      - enc-server-py-volume:/data/db
+#
+#  enc-server-py-be:
+#    build:
+#      context: ./
+#    container_name: enc-server-py-be
+#    depends_on:
+#      - mongodb
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#    entrypoint: make server-be
+#    hostname: enc-server-py-be
 
   enc-server-py-fe:
     build:
       context: ./
-    depends_on:
-      - enc-server-py-be
+#    depends_on:
+#      - enc-server-py-be
     deploy:
       restart_policy:
         condition: on-failure
     container_name: enc-server-py-fe
-    entrypoint: make server-fe
+    entrypoint: make feserver
     hostname: enc-server-py-fe
     ports:
       - 7777:7777
