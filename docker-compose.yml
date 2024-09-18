@@ -34,7 +34,7 @@ services:
     entrypoint: make feserver
     hostname: enc-server-py-fe
     ports:
-      - 7777:7777
+      - "7777:7777"
 
 volumes:
   enc-server-py-volume:

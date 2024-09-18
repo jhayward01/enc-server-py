@@ -1,12 +1,17 @@
+import logging
 import socket
 import threading
+import time
 import unittest
 
 import enc_server
 
 
 class BEClientTestSuite(unittest.TestCase):
-    server_addr = "localhost:8888"
+    server_host = "localhost"
+    server_port = 7778
+    server_addr = f"{server_host}:{server_port}"
+
     bad_server_addr = "foobar"
     buffer_size = 1024
 
@@ -26,16 +31,12 @@ class BEClientTestSuite(unittest.TestCase):
         self.assertRaises(KeyError, enc_server.be.client.Client, {})
 
     def test_error(self):
-        server = threading.Thread(target=BEClientTestSuite.socket_server)
-        server.start()
-
         self.assertRaises(RuntimeError, self.client.transmit, "FOO\n")
-
-        server.join()
 
     def test_store(self):
         server = threading.Thread(target=BEClientTestSuite.socket_server)
         server.start()
+        time.sleep(1)
 
         store_response = self.client.store(BEClientTestSuite.record_id_enc, BEClientTestSuite.record_payload_enc)
         self.assertEqual("SUCCESS", store_response)
@@ -45,6 +46,7 @@ class BEClientTestSuite(unittest.TestCase):
     def test_retrieve(self):
         server = threading.Thread(target=BEClientTestSuite.socket_server)
         server.start()
+        time.sleep(1)
 
         retrieve_response = self.client.retrieve(BEClientTestSuite.record_id_enc)
         self.assertEqual(BEClientTestSuite.record_payload_enc, retrieve_response)
@@ -54,6 +56,7 @@ class BEClientTestSuite(unittest.TestCase):
     def test_delete(self):
         server = threading.Thread(target=BEClientTestSuite.socket_server)
         server.start()
+        time.sleep(1)
 
         delete_response = self.client.delete(BEClientTestSuite.record_id_enc)
         self.assertEqual("SUCCESS", delete_response)
@@ -62,13 +65,12 @@ class BEClientTestSuite(unittest.TestCase):
 
     @staticmethod
     def socket_server():
-        server_host = BEClientTestSuite.server_addr.split(":")[0]
-        server_port = int(BEClientTestSuite.server_addr.split(":")[1])
-
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-            server.bind((server_host, server_port))
+            logging.info(f"Binding to {BEClientTestSuite.server_host} port {BEClientTestSuite.server_port}")
+            server.bind((BEClientTestSuite.server_host, BEClientTestSuite.server_port))
             server.listen()
             conn, addr = server.accept()
+            logging.info(f"Accepted connection from {addr[0]} port {addr[1]}")
             with conn:
                 while True:
                     data = conn.recv(BEClientTestSuite.buffer_size)

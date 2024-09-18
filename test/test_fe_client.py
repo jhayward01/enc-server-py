@@ -1,12 +1,15 @@
+import logging
 import socket
 import threading
+import time
 import unittest
 
 import enc_server
 
 
 class FEClientTestSuite(unittest.TestCase):
-    server_addr = "localhost:7777"
+    server_host = "localhost"
+    server_port = 7779
     bad_server_addr = "foobar"
     buffer_size = 1024
 
@@ -18,7 +21,8 @@ class FEClientTestSuite(unittest.TestCase):
     record_key = "06f1be76f38d296ddb8070dc74e37327970ffee6fad1a8ecc9b9145eedd0c3df"
 
     def setUp(self):
-        self.client = enc_server.fe.client.Client({"serverAddr": FEClientTestSuite.server_addr})
+        self.client = enc_server.fe.client.Client(
+            {"serverAddr": f"{FEClientTestSuite.server_host}:{FEClientTestSuite.server_port}"})
 
     def test_init(self):
         self.assertIsNotNone(self.client)
@@ -26,6 +30,7 @@ class FEClientTestSuite(unittest.TestCase):
     def test_store(self):
         server = threading.Thread(target=FEClientTestSuite.socket_server)
         server.start()
+        time.sleep(1)
 
         store_response = self.client.store(FEClientTestSuite.record_id, FEClientTestSuite.record_payload)
         self.assertEqual(FEClientTestSuite.record_key, store_response)
@@ -35,6 +40,7 @@ class FEClientTestSuite(unittest.TestCase):
     def test_retrieve(self):
         server = threading.Thread(target=FEClientTestSuite.socket_server)
         server.start()
+        time.sleep(1)
 
         retrieve_response = self.client.retrieve(FEClientTestSuite.record_id, FEClientTestSuite.record_key)
         self.assertEqual(FEClientTestSuite.record_payload, retrieve_response)
@@ -44,6 +50,7 @@ class FEClientTestSuite(unittest.TestCase):
     def test_delete(self):
         server = threading.Thread(target=FEClientTestSuite.socket_server)
         server.start()
+        time.sleep(1)
 
         delete_response = self.client.delete(FEClientTestSuite.record_id, FEClientTestSuite.record_key)
         self.assertEqual("SUCCESS", delete_response)
@@ -52,13 +59,12 @@ class FEClientTestSuite(unittest.TestCase):
 
     @staticmethod
     def socket_server():
-        server_host = FEClientTestSuite.server_addr.split(":")[0]
-        server_port = int(FEClientTestSuite.server_addr.split(":")[1])
-
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-            server.bind((server_host, server_port))
+            logging.info(f"Binding to {FEClientTestSuite.server_host} port {FEClientTestSuite.server_port}")
+            server.bind((FEClientTestSuite.server_host, FEClientTestSuite.server_port))
             server.listen()
             conn, addr = server.accept()
+            logging.info(f"Accepted connection from {addr[0]} port {addr[1]}")
             with conn:
                 while True:
                     data = conn.recv(FEClientTestSuite.buffer_size)
