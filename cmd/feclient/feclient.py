@@ -1,4 +1,5 @@
 import logging
+import time
 import traceback
 
 import enc_server
@@ -23,13 +24,16 @@ if __name__ == '__main__':
 
         logging.info(f"Storing record {record_id} {record_payload}")
         key = client.store(record_id, record_payload)
+        time.sleep(2)
 
         logging.info(f"Retrieving record {record_id}")
         result = client.retrieve(record_id, key)
         logging.info(f"{record_id} {result}")
+        time.sleep(2)
 
         logging.info(f"Deleting record {record_id}")
         client.delete(record_id, key)
+        time.sleep(2)
 
     except Exception as err:
         logging.fatal(traceback.format_exc())
