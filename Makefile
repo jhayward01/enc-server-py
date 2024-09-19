@@ -48,3 +48,11 @@ up:
 # make down                # Stop BE/FE servers in docker-compose
 down:
 	docker compose down
+
+# make start-cluster       # Start application in local Kubernetes cluster
+start-cluster:
+	./deployments/minikube/start_cluster.sh
+
+# make stop-cluster        # Stop application in local Kubernetes cluster
+stop-cluster:
+	./deployments/minikube/stop_cluster.sh
