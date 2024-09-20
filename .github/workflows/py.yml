@@ -32,7 +32,7 @@ jobs:
     - name: Start Servers 
       run: make up
 
-    - name: Integration Test s
+    - name: Integration Tests
       run: make itests
 
     - name: Stop Servers
