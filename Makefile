@@ -2,17 +2,17 @@
 help:
 	@grep -e "^\# make" Makefile |  cut -c 3-
 
-# make tests               # Run unit tests
+ # make install            # Install requirements
+install:
+	pip install -r requirements.txt
+
+# make tests               # Run unit tests (requires local mongodb instance)
 tests:
 	python -m unittest discover -s test -t test
 
 # make itests              # Run integration tests
 itests:
 	./test/itests.sh
-
- # make install            # Install requirements
-install:
-	pip install -r requirements.txt
 
 # make beserver-cmd        # Run BE server in terminal
 beserver-cmd:

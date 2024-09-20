@@ -1,4 +1,3 @@
-
 Started feclient
 Loading config file 'config/config.yaml'
 {'serverAddr': 'localhost:7777', 'id': 'JTH', 'record': 'PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS'}
