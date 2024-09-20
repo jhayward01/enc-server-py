@@ -31,11 +31,10 @@ class SocketioTestSuite(unittest.TestCase):
     def test_alt_init(self):
         s = enc_server.utils.SocketIO({"port": SocketioTestSuite.port, "useExtIP": "True"},
                                       self.responder)
-        print(s.host)
         socket.inet_aton(s.host)
 
     def test_get_response(self):
-        server = threading.Thread(target=self.socket_io.start)
+        server = threading.Thread(target=self.socket_io.start, args=[True])
         server.start()
         time.sleep(1)
 

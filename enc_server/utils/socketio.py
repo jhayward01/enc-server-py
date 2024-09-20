@@ -23,20 +23,20 @@ class SocketIO:
         self.port = int(configs["port"])
         self.responder = responder
 
-    def start(self, server_config=False):
-        while True:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-                logging.debug(f"Binding to {self.host} port {self.port}")
-                server.bind((self.host, self.port))
-                server.listen()
+    def start(self, ut_config=False):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
+            logging.debug(f"Binding to {self.host} port {self.port}")
+            server.bind((self.host, self.port))
+            server.listen()
+            while True:
                 conn, addr = server.accept()
                 logging.debug(f"Accepted connection from {addr[0]} port {addr[1]}")
                 with conn:
                     while True:
                         data = conn.recv(SocketIO.buffer_size)
                         if not data:
+                            logging.debug(f"Closing connection from {addr[0]} port {addr[1]}")
                             break
                         conn.sendall(self.responder.respond(data))
-            if not server_config:
-                return
-            time.sleep(1)
+                    if ut_config:
+                        return

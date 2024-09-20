@@ -26,12 +26,17 @@ The _back-end_ service defines three parallel endpoints for storing and retrievi
 encrypted user data. This microservice interacts with a MongoDB instance to provide 
 persistent storage of data.
 
-## Installation ##
+## Installation and Unit Tests ##
 1. Install project dependencies in a local virtual environment running Python 3.11.
     ```
     make install
     ```
 
+2. Run unit tests (requires local mongodb instance running on default port 27017).
+    ```
+    make tests
+    ```
+   
 ## Running Microservices in Docker Compose (Recommended) ##
 1. Start the microservices in _docker-compose_.
     ```
@@ -43,7 +48,12 @@ persistent storage of data.
     make feclient
     ```
 
-3. Stop the microservices.
+3. Run integration tests.
+    ```
+    make itests
+    ```
+
+4. Stop the microservices.
     ```
     make down
     ```

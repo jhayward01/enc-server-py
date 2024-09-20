@@ -66,5 +66,5 @@ class Server(utils.Responder):
         else:
             return "SUCCESS"
 
-    def start(self, server_config=False):
-        self.socket_io.start(server_config=server_config)
+    def start(self):
+        self.socket_io.start()
