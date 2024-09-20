@@ -1,29 +1,28 @@
 # enc-server-py
 
 This portfolio project implements an web-based encryption application 
-in Python. It reimplements [the original Go version](https://github.com/jhayward01/enc-server-go).
-
-Two microservices are defined in this project - a front-end and back-end 
-service. Both contain client and server components.
+in Python. It reimplements [the original Go version](https://github.com/jhayward01/enc-server-go).  Two microservices 
+are defined in this project - a _front-end_ and _back-end_ service. Both contain 
+client and server components.
 
 The _front-end_ service defines three endpoints:
 
 * _StoreRecord_ - This endpoint accepts requests to store a record 
-* associated with a user ID. The records are encrypted with a 
-* randomly-generated 32-bit key using AES in GCM mode. User IDs 
-* are encrypted similarly with a fixed internal AES key (intended 
-* to provided user anonymity on the data store). Encrypted user IDs
-* and records are transmitted to the _back-end_ service, and the record 
-* AES key is returned to the user.
+associated with a user ID. The records are encrypted with a 
+randomly-generated 32-bit key using AES in GCM mode. User IDs 
+are encrypted similarly with a fixed internal AES key (intended 
+to provided user anonymity on the data store). Encrypted user IDs
+and records are transmitted to the _back-end_ service, and the record 
+AES key is returned to the user.
 	
 * _RetrieveRecord_ - This endpoint accepts requests for record retrieval
-* via a user ID and AES key. The microservice requests the encrypted 
-* record from the _back-end_ service, decrypts the record with the AES 
-* key, and returns it to the user. 
+via a user ID and AES key. The microservice requests the encrypted 
+record from the _back-end_ service, decrypts the record with the AES 
+key, and returns it to the user. 
 
 * _DeleteRecord_ - This endpoint accepts requests for record deletion via a user ID. 
 	
-The _back-end_ service defines three related endpoints for storing and retrieving 
+The _back-end_ service defines three parallel endpoints for storing and retrieving 
 encrypted user data. This microservice interacts with a MongoDB instance to provide 
 persistent storage of data.
 
@@ -104,11 +103,11 @@ make stop-cluster        # Stop application in local Kubernetes cluster
 
 * [config](config) - Contains microservice configurations for running on _docker-compose_ and command line. 
     * _Microservice components will load configuration file `config/config.json` by default - this path may be 
-    * overridden with environment variable `ENC_SERVER_PY_CONFIG_PATH`._
+     overridden with environment variable `ENC_SERVER_PY_CONFIG_PATH`._
     * _Components will log to directory `/tmp/enc-server-go-logs` by default - this path may be overridden 
-    * with environment variable `ENC_SERVER_PY_LOG_DIR`._
+     with environment variable `ENC_SERVER_PY_LOG_DIR`._
     * _Components will also log to standard output by default - this may be overridden by setting environment 
-    * variable `ENC_SERVER_PY_LOG_STDOUT` to false._
+     variable `ENC_SERVER_PY_LOG_STDOUT` to false._
 
 * [deployments](deployments) - Defines Kubernetes scripts and configurations.
 
@@ -126,7 +125,8 @@ make stop-cluster        # Stop application in local Kubernetes cluster
 		
 		* [server](enc_server/be/server)
 	
-	* [utils](enc_server/utils) - Defines shared utilities, including configuration readers, logging, database clients, and network IO.
+	* [utils](enc_server/utils) - Defines shared utilities, including configuration readers, logging, database 
+     clients, and network IO.
 
 * [test](test) - Defines unit and integration tests.
 
