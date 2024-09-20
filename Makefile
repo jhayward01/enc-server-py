@@ -4,7 +4,7 @@ help:
 
 # make tests               # Run unit tests
 tests:
-	python -m unittest discover -s /Users/johnny/PycharmProjects/enc-server-py/test -t /Users/johnny/PycharmProjects/enc-server-py/test
+	python -m unittest discover -s test -t test
 
 # make itests              # Run integration tests
 itests:
