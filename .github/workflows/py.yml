@@ -11,7 +11,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    
+    - name: Set up Py
     - uses: actions/setup-python@v5
       with:
-        python-version: '3.11' 
+        python-version: '3.11'
+        
+    - name: Unit Tests
+      run: make tests
