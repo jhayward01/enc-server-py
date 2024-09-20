@@ -30,10 +30,10 @@ jobs:
       run: make tests
 
     - name: Start Servers 
-      run: make servers
+      run: make up
 
     - name: Integration Test s
       run: make itests
 
     - name: Stop Servers
-      run: make stop
+      run: make down
