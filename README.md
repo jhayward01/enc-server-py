@@ -1,6 +1,6 @@
 # enc-server-py
 
-This portfolio project implements an web-based encryption application 
+This portfolio project implements a web-based encryption application 
 in Python. It reimplements [the original Go version](https://github.com/jhayward01/enc-server-go).  Two microservices 
 are defined in this project - a _front-end_ and _back-end_ service. Both contain 
 client and server components.
@@ -47,13 +47,13 @@ persistent storage of data.
 
 2. Start the microservices in separate terminals.
     ```
-    make server-be-cmd
-    make server-fe-cmd
+    make beserver-cmd
+    make feserver-cmd
     ```
     
 3. In third terminal, run the _front-end_ client with trial data.
     ```
-    make client
+    make feclient-cmd
     ```
     
 ## Running Microservices in Kubernetes ##
@@ -71,7 +71,7 @@ persistent storage of data.
     
 3. Run the _front-end_ client with trial data.
     ```
-    make client
+    make feclient
     ```
     
 4. Stop local Kubernetes cluster.
@@ -102,12 +102,12 @@ make stop-cluster        # Stop application in local Kubernetes cluster
 * [cmd](cmd) - Defines main applications for all services.
 
 * [config](config) - Contains microservice configurations for running on _docker-compose_ and command line. 
-    * _Microservice components will load configuration file `config/config.json` by default - this path may be 
-     overridden with environment variable `ENC_SERVER_PY_CONFIG_PATH`._
-    * _Components will log to directory `/tmp/enc-server-go-logs` by default - this path may be overridden 
-     with environment variable `ENC_SERVER_PY_LOG_DIR`._
-    * _Components will also log to standard output by default - this may be overridden by setting environment 
-     variable `ENC_SERVER_PY_LOG_STDOUT` to false._
+    * Microservice components will load configuration file `config/config.json` by default - this path may be 
+    overridden with environment variable `ENC_SERVER_PY_CONFIG_PATH`.
+    * Components will log to directory `/tmp/enc-server-go-logs` by default - this path may be overridden 
+    with environment variable `ENC_SERVER_PY_LOG_DIR`.
+    * Components will also log to standard output by default - this may be overridden by setting environment 
+    variable `ENC_SERVER_PY_LOG_STDOUT` to false.
 
 * [deployments](deployments) - Defines Kubernetes scripts and configurations.
 
@@ -119,14 +119,14 @@ make stop-cluster        # Stop application in local Kubernetes cluster
 		
 		* [server](enc_server/fe/server)
 
-	* [be](pkg/be) - Back-end service providing data storage.
+	* [be](enc_server/be) - Back-end service providing data storage.
 	
 		* [client](enc_server/be/client)
 		
 		* [server](enc_server/be/server)
 	
 	* [utils](enc_server/utils) - Defines shared utilities, including configuration readers, logging, database 
-     clients, and network IO.
+    clients, and network IO.
 
 * [test](test) - Defines unit and integration tests.
 
