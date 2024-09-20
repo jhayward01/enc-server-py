@@ -18,8 +18,8 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Build
-      run: make build
+    - name: Install
+      run: make install
         
     - name: Unit Tests
       run: make tests
