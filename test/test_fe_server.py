@@ -4,8 +4,10 @@ import enc_server
 
 
 class FEServerTestSuite(unittest.TestCase):
-    configs = {'port': '7777', 'useExtIP': 'False', 'keySize': 32, 'idNonceStr': '9bc423909ac5', 'serverAddr': 'localhost:8888'}
-    bad_configs = {'port': '7777', 'useExtIP': 'False', 'keySize': 32, 'idNonceStr': '9bc423909ac5', 'serverAddr': 'localhost:1111'}
+    configs = {'port': '7777', 'useExtIP': 'False', 'keySize': 32, 'idNonceStr': '9bc423909ac5',
+               'serverAddr': 'localhost:8888'}
+    bad_configs = {'port': '7777', 'useExtIP': 'False', 'keySize': 32, 'idNonceStr': '9bc423909ac5',
+                   'serverAddr': 'localhost:1111'}
 
     record_id = 'JTH'
     record_payload = 'PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS'

@@ -1,6 +1,5 @@
 import logging
 import socket
-import time
 from abc import ABC
 
 import enc_server

@@ -38,4 +38,5 @@ if __name__ == '__main__':
         time.sleep(2)
 
     except Exception as err:
+        logging.fatal(err)
         logging.fatal(traceback.format_exc())

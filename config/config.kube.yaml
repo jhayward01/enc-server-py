@@ -1,28 +1,28 @@
 {
-    "feClientConfigs": {
-        "serverAddr": "enc-server-py-fe:7777"
-    },
-    
-    "feServerConfigs": {
-        "keySize": "32",
-        "idKeyStr": "vkAZAarLbZ6w0kmL2HJP3eU1ODCgVj4k",
-        "idNonceStr": "9bc423909ac5",
-        "port": "7777",
-        "useExtIP": "False"
-    },
-    
-    "beServerConfigs": {
-        "port": "8888",
-        "useExtIP": "True",
-        "mongoURI": "mongodb://enc-server-py-db:27017"
-    },
-    
-    "beClientConfigs": {
-        "serverAddr": "enc-server-py-be:8888"
-    },
-    
-    "testParams": {
-        "id": "JTH",
-        "record": "PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS"
-    }
+  "feClientConfigs": {
+    "serverAddr": "enc-server-py-fe:7777"
+  },
+
+  "feServerConfigs": {
+    "keySize": "32",
+    "idKeyStr": "vkAZAarLbZ6w0kmL2HJP3eU1ODCgVj4k",
+    "idNonceStr": "9bc423909ac5",
+    "port": "7777",
+    "useExtIP": "False"
+  },
+
+  "beServerConfigs": {
+    "port": "8888",
+    "useExtIP": "True",
+    "mongoURI": "mongodb://enc-server-py-db:27017"
+  },
+
+  "beClientConfigs": {
+    "serverAddr": "enc-server-py-be:8888"
+  },
+
+  "testParams": {
+    "id": "JTH",
+    "record": "PAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADSPAYLOADS"
+  }
 }

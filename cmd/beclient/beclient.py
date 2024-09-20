@@ -1,5 +1,6 @@
 import logging
 import time
+import traceback
 
 import enc_server
 
@@ -38,3 +39,4 @@ if __name__ == '__main__':
 
     except Exception as err:
         logging.fatal(err)
+        logging.fatal(traceback.format_exc())

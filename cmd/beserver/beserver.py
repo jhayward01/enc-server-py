@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 import enc_server
 
@@ -17,5 +18,7 @@ if __name__ == '__main__':
         server = enc_server.be.server.Server(configs[config_name])
 
         server.start()
+
     except Exception as err:
         logging.fatal(err)
+        logging.fatal(traceback.format_exc())
