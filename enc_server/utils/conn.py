@@ -17,12 +17,12 @@ class ConnSocket:
         self.server_port = int(server_addr.split(":")[1])
 
     def get_response(self, message: str) -> str:
-        logging.info(f"Transmitting {message.strip()}")
+        logging.debug(f"Transmitting {message.strip()}")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.server_host, self.server_port))
             s.sendall(bytes(message, 'utf-8'))
             data = s.recv(ConnSocket.buffer_size)
 
         response = data.decode('utf-8').strip()
-        logging.info(f"Received {response}")
+        logging.debug(f"Received {response}")
         return response

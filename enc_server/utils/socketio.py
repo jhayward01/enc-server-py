@@ -26,11 +26,11 @@ class SocketIO:
     def start(self, server_config=False):
         while True:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-                logging.info(f"Binding to {self.host} port {self.port}")
+                logging.debug(f"Binding to {self.host} port {self.port}")
                 server.bind((self.host, self.port))
                 server.listen()
                 conn, addr = server.accept()
-                logging.info(f"Accepted connection from {addr[0]} port {addr[1]}")
+                logging.debug(f"Accepted connection from {addr[0]} port {addr[1]}")
                 with conn:
                     while True:
                         data = conn.recv(SocketIO.buffer_size)

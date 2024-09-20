@@ -2,11 +2,16 @@
 help:
 	@grep -e "^\# make" Makefile |  cut -c 3-
 
-# make tests               # Test repo
+# make tests               # Run unit tests
 tests:
 	python -m unittest discover -s /Users/johnny/PycharmProjects/enc-server-py/test -t /Users/johnny/PycharmProjects/enc-server-py/test
 
-install:				   # Install requirements
+# make itests              # Run integration tests
+itests:
+	./test/itests.sh
+
+ # make install            # Install requirements
+install:
 	pip install -r requirements.txt
 
 # make beserver-cmd        # Run BE server in terminal
@@ -41,7 +46,7 @@ feserver:
 feclient:
 	PYTHONPATH=. python cmd/feclient/feclient.py
 
-# make up                  # Run BE/FE servers in docker-compose
+# make up                  # Start BE/FE servers in docker-compose
 up:
 	docker compose up -d --build
 

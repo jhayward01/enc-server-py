@@ -1,3 +1,5 @@
+crib.sh
+
 __pycache__/
 *.py[cod]
 
