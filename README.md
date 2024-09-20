@@ -45,13 +45,18 @@ persistent storage of data.
 ## Running Microservices on Command Line ##
 1. Start a local MongoDB instance with default port 27017 exposed.
 
-2. Start the microservices in separate terminals.
+2. Install dependencies in a local Python virtual environment.
+    ```
+    make install
+    ```
+
+3. Start the microservices in separate terminals.
     ```
     make beserver-cmd
     make feserver-cmd
     ```
     
-3. In third terminal, run the _front-end_ client with trial data.
+4. In third terminal, run the _front-end_ client with trial data.
     ```
     make feclient-cmd
     ```
