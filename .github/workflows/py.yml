@@ -31,6 +31,10 @@ jobs:
 
     - name: Start Servers 
       run: make up
+      
+    - name: Sleep for 30 Seconds
+      run: sleep 30s
+      shell: bash
 
     - name: Integration Tests
       run: make itests
