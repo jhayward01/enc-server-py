@@ -33,7 +33,7 @@ class SocketioTestSuite(unittest.TestCase):
         socket.inet_aton(s.host)
 
     def test_get_response(self):
-        server = threading.Thread(target=self.socket_io.start, args=[True])
+        server = threading.Thread(target=self.socket_io.start)
         server.start()
         time.sleep(1)
 
@@ -42,6 +42,7 @@ class SocketioTestSuite(unittest.TestCase):
             s.connect((SocketioTestSuite.host, SocketioTestSuite.port))
             s.sendall(SocketioTestSuite.msg.encode('utf-8'))
             data = s.recv(SocketioTestSuite.buffer_size)
+            s.sendall(enc_server.utils.SocketIO.shutdown_str)
 
         response = data.decode('utf-8')
         logging.info(f"Received {response}")

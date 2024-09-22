@@ -12,6 +12,7 @@ class Responder(ABC):
 
 class SocketIO:
     buffer_size = 1024
+    shutdown_str = b"SHUTDOWN\n"
 
     def __init__(self, configs: dict, responder: Responder):
         result, missing = enc_server.utils.ConfigFile.verify_configs(configs, ["port", "useExtIP"])
@@ -22,9 +23,9 @@ class SocketIO:
         self.port = int(configs["port"])
         self.responder = responder
 
-    def start(self, ut_config=False):
+    def start(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-            logging.debug(f"Binding to {self.host} port {self.port}")
+            logging.debug(f"SocketIO binding to {self.host} port {self.port}")
             server.bind((self.host, self.port))
             server.listen()
             while True:
@@ -36,6 +37,7 @@ class SocketIO:
                         if not data:
                             logging.debug(f"Closing connection from {addr[0]} port {addr[1]}")
                             break
+                        if data == SocketIO.shutdown_str:
+                            logging.debug(f"SocketIO {self.host} port {self.port} shutting down")
+                            return
                         conn.sendall(self.responder.respond(data))
-                    if ut_config:
-                        return
