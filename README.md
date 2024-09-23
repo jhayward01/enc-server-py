@@ -38,7 +38,7 @@ persistent storage of data.
     ```
    
 ## Running Microservices in Docker Compose (Recommended) ##
-1. Start the microservices in _docker-compose_.
+1. Start the microservices in docker-compose.
     ```
     make up
     ```
