@@ -6,7 +6,7 @@ help:
 install:
 	pip install -r requirements.txt
 
-# make tests               # Run unit tests (requires local mongodb instance)
+# make tests               # Run unit tests (requires local MongoDB instance)
 tests:
 	python -m unittest discover -s test -t test
 

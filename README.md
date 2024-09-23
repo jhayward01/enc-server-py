@@ -27,12 +27,12 @@ encrypted user data. This microservice interacts with a MongoDB instance to prov
 persistent storage of data.
 
 ## Installation and Unit Tests ##
-1. Install project dependencies in a local virtual environment running Python 3.11.
+1. Install project dependencies (a local virtual environment running Python 3.11 is recommended).
     ```
     make install
     ```
 
-2. Run unit tests (requires local mongodb instance running on default port 27017).
+2. Run unit tests (requires local MongoDB instance running on default port 27017).
     ```
     make tests
     ```
@@ -98,7 +98,7 @@ persistent storage of data.
 ## Makefile Commands ##
 ```
 make help                # Print makefile reference
-make tests               # Run unit tests (requires local mongodb instance)
+make tests               # Run unit tests (requires local MongoDB instance)
 make itests              # Run integration tests
 make beserver-cmd        # Run BE server in terminal
 make beclient-cmd        # Run BE client in terminal
@@ -115,9 +115,9 @@ make stop-cluster        # Stop application in local Kubernetes cluster
 ```
  
 ## Repo Contents ##
-* [cmd](cmd) - Defines main applications for all services.
+* [cmd](cmd) - Defines main applications for servers and clients.
 
-* [config](config) - Contains microservice configurations for running on _docker-compose_ and command line. 
+* [config](config) - Contains microservice configurations for running on command line, docker-compose and Kubernetes. 
     * Microservice components will load configuration file `config/config.json` by default - this path may be 
     overridden with environment variable `ENC_SERVER_PY_CONFIG_PATH`.
     * Components will log to directory `/tmp/enc-server-go-logs` by default - this path may be overridden 
